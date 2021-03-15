@@ -26,10 +26,10 @@ export default {
 <style scoped>
 form {
   max-width: 420px;
-  margin: 30px auto;
+  margin: 8px auto;
   background: white;
   text-align: left;
-  padding: 40px;
+  padding: 30px;
   border-radius: 10px;
 }
 label {
