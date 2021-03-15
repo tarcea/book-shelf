@@ -26,7 +26,7 @@
   .modal {
     width: 350px;
     padding: 20px;
-    margin: 100px auto;
+    margin: 80px auto;
     background: #ffffff;
     border-radius: 10px;
     /* box-sizing: border-box; */

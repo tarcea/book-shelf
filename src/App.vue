@@ -6,10 +6,8 @@
         Add a new book
       </template>
       <template v-slot:form>
-        <InputForm />
+        <InputForm :book="dummyBook" />
       </template>
-      <h3>{{ header }}</h3>
-      <p>{{ content }}</p>
     </Modal>
   </teleport>
   <teleport to="#modals" v-if="showEditModal">
@@ -18,10 +16,8 @@
         Edit
       </template>
       <template v-slot:form>
-        <InputForm />
+        <InputForm :book="selectedBook"/>
       </template>
-      <h3>{{ header }}</h3>
-      <p>{{ content }}</p>
     </Modal>
   </teleport>
   <h1 class="title" v-if="adminMode">admin bookshelf</h1>
@@ -62,6 +58,12 @@ export default {
       darkMode: false,
       showAddModal: false,
       showEditModal: false,
+      dummyBook: {
+        title: 'Title',
+        author: 'Author',
+        about: 'Describe your book',
+        img: 'https://www.thethoughtfinder.co.uk/wp-content/uploads/2017/04/BOOK-PLACEHOLDER-3.png'
+      }
     }
   },
   components: {

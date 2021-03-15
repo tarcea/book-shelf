@@ -1,24 +1,22 @@
 <template>
   <form>
     <label>Title:</label>
-    <input type="text" required v-model="title">
+    <input type="text" required v-model="book.title">
     <label>Author:</label>
-    <input type="text" required v-model="author">
+    <input type="text" required v-model="book.author">
     <label>Image url:</label>
-    <input type="text" required v-model="url">
+    <input type="text" required v-model="book.img">
     <label>About:</label>
-    <textarea v-model="about"></textarea>
+    <textarea v-model="book.about"></textarea>
   </form>
 </template>
 
 <script>
 export default {
+  props: [ 'book' ],
   data() {
     return {
-      title: '',
-      author: '',
-      url: '',
-      about: ''
+      
     };
   },
 };
@@ -51,5 +49,9 @@ input, textarea {
   border: none;
   border-bottom: 1px solid #dddddd;
   color: #555555;
+}
+textarea {
+  resize: none;
+  height: 100px;
 }
 </style>
