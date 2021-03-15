@@ -1,5 +1,5 @@
 <template>
-  <div class="selected" v-if="book.title">
+  <div class="selected" v-if="book.img">
     <div v-if="admin" class="admin_menu">
       <div class="admin_icon">&#x2699; edit</div>
       <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
@@ -10,7 +10,7 @@
       <!-- </div> -->
       <div class="headers">
         <h3>{{ book.title }}</h3>
-        <p>{{ `by ${book.author}`}}</p>
+        <p>{{ `by ${book.author }`}}</p>
       </div>
     </div>
     <div class="about">

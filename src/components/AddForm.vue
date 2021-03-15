@@ -2,13 +2,13 @@
 <div class="form_container">
   <form ref="addForm" class="add_form" @submit="onFormSubmit">
     <label>Title</label>
-    <input type="text" v-model="title" placeholder="title"/>
+    <input type="text" v-model="book.title" placeholder="title"/>
     <label>Author</label>
-    <input type="text" v-model="author" placeholder="author"/>
+    <input type="text" v-model="book.author" placeholder="author"/>
     <label>Image url</label>
-    <input type="text" v-model="img" placeholder="img"/>
+    <input type="text" v-model="book.img"/>
     <label>Description</label>
-    <textarea v-model="about" placeholder="about"></textarea>
+    <textarea v-model="book.about" placeholder="about"></textarea>
     <label></label>
     <input type="submit" value="Submit" class="submit_button"> 
   </form>
@@ -27,21 +27,23 @@ export default {
         title: '',
         author: '',
         about: '',
-        img: ''
+        img: 'https://www.thethoughtfinder.co.uk/wp-content/uploads/2017/04/BOOK-PLACEHOLDER-3.png'
       }
     }
   },
   methods: {
      onFormChange() {
-      this.book = {...this.book, title:this.title, author:this.author, about:this.about, img:this.img}
+      const { title, author, about, img } = this.book
+      this.book = {...this.book, title, author, about, img}
     },
     clearForm() {
       this.$refs.addForm.reset();
       // console.log(this.$refs.addForm)
     },
     onFormSubmit(e) {
+      const { title, author, about, img } = this.book
       e.preventDefault()
-      this.book = {...this.book, title:this.title, author:this.author, about:this.about, img:this.img}
+      this.book = {...this.book, title, author, about, img}
       this.$emit('submitForm', this.book)
       e.target.reset();
     },

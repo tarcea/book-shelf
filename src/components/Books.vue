@@ -15,7 +15,7 @@ export default {
   props: { books: Array, method: { type: Function }},
   data() {
     return {
-      
+      booksReversed: [],
     }
   },
   components: { Book },
@@ -26,6 +26,7 @@ export default {
       this.booksReversed = cloneArray.reverse()
     },
   },
+  
 }
 </script>
   

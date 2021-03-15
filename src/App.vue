@@ -53,13 +53,13 @@ export default {
         // load fetched books from firebase to localStorage
         localStorage.setItem('books', JSON.stringify(fetchedBooks))
         // update local state
-        this.books = JSON.parse(localStorage.getItem('books')).reverse()
+        this.books = JSON.parse(localStorage.getItem('books'))
         // call getRandomBook for have a book as default to show
         this.getRandomBook();
       })
       } else {
         // if localStorage is not empty, update local state
-        this.books = JSON.parse(localStorage.getItem('books')).reverse()
+        this.books = JSON.parse(localStorage.getItem('books'))
         // and pick a book as default to show
         this.getRandomBook();
       }
