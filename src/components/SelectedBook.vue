@@ -80,7 +80,7 @@ export default {
   cursor: pointer;
   /* position: relative; */
   /* top: 25px; */
-  opacity: 80%;
+  /* opacity: 80%; */
   background:beige;
   width: 123px;
   margin: 0 auto;
@@ -91,8 +91,9 @@ export default {
   /* height: 0vh; */
   display: flex;
   width: 100%;
-  text-align:justify;
+  /* text-align:justify; */
   margin: 0 auto;
+  justify-content: center;
 
 }
 
