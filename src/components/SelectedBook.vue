@@ -1,13 +1,16 @@
 <template>
   <div class="selected" v-if="book.title">
     <div class="selected_title">
-      <!-- <div> -->
-        <div v-if="admin" class="admin_menu">
+      <div v-if="admin" >
+        <div class="admin_menu">
           <div class="admin_icon">&#x2699; edit</div>
           <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
         </div>
         <img :src="book.img" alt="book picture" />
-      <!-- </div> -->
+      </div>
+      <div v-else>
+        <img :src="book.img" alt="book picture" />
+      </div>
       <div class="headers">
         <h3>{{ book.title }}</h3>
         <p>{{ `by ${book.author}`}}</p>
@@ -92,7 +95,6 @@ export default {
 .admin_menu {
   height: 0vh;
   text-align:justify;
-  z-index: 10;
 }
 
 </style>

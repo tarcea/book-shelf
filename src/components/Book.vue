@@ -19,7 +19,6 @@ export default {
   width: 200px;
   padding: 8px;
   text-align: justify;
-  z-index: 1;
 }
 
 /* .book h3 {
