@@ -86,12 +86,13 @@ export default {
   background:beige;
   width: 123px;
   margin: 0 auto;
-  z-index: 10;
+  
 }
 
 .admin_menu {
   height: 0vh;
   text-align:justify;
+  z-index: 10;
 }
 
 </style>

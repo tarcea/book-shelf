@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <p @click="() => this.$emit('showForm')">add book</p>
-    <p class="counter">you have <span class="focus">{{length}}</span> books</p>
+    <p class="counter"><span class="focus">{{length}}</span> books on shelf</p>
     <p @click="() => this.$emit('showAdmin')">admin</p>
   </div>
 </template>
