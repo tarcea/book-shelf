@@ -1,7 +1,7 @@
 <template>
 <Navbar @showForm="toggleShowForm" @showAdmin="toggleAdmin" :length="length"/>
-  <h1 class="title" v-if="adminMode">admin book shelf</h1>
-  <h1 class="title" v-else>my book shelf</h1>
+  <h1 class="title" v-if="adminMode">admin bookshelf</h1>
+  <h1 class="title" v-else>my bookshelf</h1>
   <div class="main_container">
     <div class="right">
     <Books :books="books" @filterBook="getSelectedBook" />

@@ -91,6 +91,8 @@ export default {
 .admin_menu {
   height: 0vh;
   text-align:justify;
+  z-index: 999;
+  display: block;
 }
 
 </style>
