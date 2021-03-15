@@ -37,7 +37,7 @@ export default {
   }
   .navbar p {
     font-size: 16px;
-    color: navajowhite;
+    color: beige;
     font-weight: bold;
     cursor: pointer;
   }

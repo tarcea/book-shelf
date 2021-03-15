@@ -32,10 +32,6 @@ export default {
     }
   },
   methods: {
-     onFormChange() {
-      const { title, author, about, img } = this.book
-      this.book = {...this.book, title, author, about, img}
-    },
     clearForm() {
       this.$refs.addForm.reset();
       // console.log(this.$refs.addForm)
@@ -61,7 +57,6 @@ export default {
 .form_container {
   display:flex;
   justify-content:center;
-  
 }
 .form_container form { 
   margin-bottom: 10px; 
@@ -82,7 +77,6 @@ export default {
 input[type='tex'], textarea { font-family: Avenir, Helvetica, Arial, sans-serif; }
 .clear {
   width: 220px;
-  /* margin: 30px auto; */
   margin-bottom: 30px;
   margin-left: 47%;
 }

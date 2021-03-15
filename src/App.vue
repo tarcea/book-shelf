@@ -1,5 +1,17 @@
 <template>
 <Navbar @showForm="toggleShowForm" @showAdmin="toggleAdmin" :length="length"/>
+<teleport to="#modals" v-if="showModal">
+    <Modal theme="dark" @close="() => this.showModal = false" >
+      <template v-slot:title>
+        Add a new book
+      </template>
+      <template v-slot:form>
+        <AddForm @submitForm="createBook" @cancelForm="showModal = false"/>
+      </template>
+      <h3>{{ header }}</h3>
+      <p>{{ content }}</p>
+    </Modal>
+  </teleport>
   <h1 class="title" v-if="adminMode">admin bookshelf</h1>
   <h1 class="title" v-else>my bookshelf</h1>
   <div class="main_container">
@@ -10,7 +22,7 @@
       <div v-show="showForm">
         <AddForm @submitForm="createBook" @cancelForm="showForm = false"/>
       </div>
-      <SelectedBook v-if="selectedBook" :book="selectedBook" :admin="adminMode" @deleteBook="deleteBook"/>
+      <SelectedBook v-if="selectedBook" :book="selectedBook" :admin="adminMode" @deleteBook="deleteBook" @openFormModal="toggleModal"/>
     </div>
   </div>
 </template>
@@ -21,6 +33,7 @@ import Books from './components/Books'
 import SelectedBook from './components/SelectedBook'
 import Navbar from './components/Navbar'
 import AddForm from './components/AddForm'
+import Modal from './components/Modal'
 
 const db = firebase.firestore()
 
@@ -32,11 +45,13 @@ export default {
       selectedBook: {},
       showForm: false,
       adminMode: false,
-      length: 0
+      length: 0,
+      darkMode: false,
+      showModal: false,
     }
   },
   components: {
-    Books, SelectedBook, Navbar, AddForm
+    Books, SelectedBook, Navbar, AddForm, Modal
   },
   methods: {
     getBooks() {
@@ -48,7 +63,7 @@ export default {
         const fetchedBooks = snapshot.docs.map((doc) => ({
           id: new Date().getTime() + Math.floor(Math.random() * Math.floor(1000)),
           ...doc.data()
-        }))
+        })).reverse()
         // this.books = fetchedBooks;
         // load fetched books from firebase to localStorage
         localStorage.setItem('books', JSON.stringify(fetchedBooks))
@@ -81,6 +96,9 @@ export default {
     toggleAdmin() {
       return this.adminMode = !this.adminMode
     },
+    toggleModal() {
+      this.showModal = !this.showModal
+    },
     async createBookInFirebase(book) {
       //for create a new book in firebase -- not used
       this.showForm = false;
@@ -89,7 +107,7 @@ export default {
     async createBook(book) {
       //for create in localStorage
       // this.showForm = false;
-      this.books = [...this.books, { ...book, id: new Date().getTime() + Math.floor(Math.random() * Math.floor(1000)) }]
+      this.books = [{ ...book, id: new Date().getTime() + Math.floor(Math.random() * Math.floor(1000)) }, ...this.books]
       localStorage.setItem('books', JSON.stringify(this.books))
     },
     deleteBook(id) {
@@ -122,7 +140,7 @@ export default {
 </script>
 
 <style>
-#app {
+#app, #modals {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
