@@ -6,7 +6,7 @@
           <div class="admin_icon">&#x2699; edit</div>
           <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
         </div>
-        <img :src="book.img" :alt="book.title" />
+        <img :src="book.img" alt="book picture" />
       <!-- </div> -->
       <div class="headers">
         <h3>{{ book.title }}</h3>
@@ -86,6 +86,7 @@ export default {
   background:beige;
   width: 123px;
   margin: 0 auto;
+  z-index: 10;
 }
 
 .admin_menu {
