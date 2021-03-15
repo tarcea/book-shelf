@@ -42,7 +42,7 @@ export default {
     getBooks() {
       this.books = JSON.parse(localStorage.getItem('books'))
       //fetching from firebase just if localStorage is empty
-      if (!this.books) {
+      if (!this.books || this.books.length === 0) {
         db.collection("books")
       .onSnapshot((snapshot) => {
         const fetchedBooks = snapshot.docs.map((doc) => ({

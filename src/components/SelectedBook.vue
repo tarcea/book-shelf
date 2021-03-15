@@ -1,13 +1,11 @@
 <template>
+<div v-if="admin" class="admin_menu">
+  <div class="admin_icon">&#x2699; edit</div>
+  <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
+</div>
   <div class="selected" v-if="book.img">
-    <div v-if="admin" class="admin_menu">
-      <div class="admin_icon">&#x2699; edit</div>
-      <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
-    </div>
     <div class="selected_title">
-      <!-- <div> -->
         <img :src="book.img" alt="book picture" />
-      <!-- </div> -->
       <div class="headers">
         <h3>{{ book.title }}</h3>
         <p>{{ `by ${book.author }`}}</p>
@@ -76,8 +74,8 @@ export default {
 .admin_icon {
   /* overflow: hidden; */
   font-size: 24px;
-  padding-right: 64px;
-  padding-left: 64px;
+  /* padding-right: 64px; */
+  /* padding-left: 64px; */
   color: orangered;
   cursor: pointer;
   /* position: relative; */
@@ -86,13 +84,16 @@ export default {
   background:beige;
   width: 123px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .admin_menu {
-  height: 0vh;
+  /* height: 0vh; */
+  display: flex;
+  width: 100%;
   text-align:justify;
-  z-index: 999;
-  display: block;
+  margin: 0 auto;
+
 }
 
 </style>
