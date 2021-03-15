@@ -17,6 +17,7 @@ export default {
 </script>
   
 <style>
+
 .books ul li {
     display: inline-block;
     width: 180px;
@@ -25,9 +26,10 @@ export default {
   }
 .books ul {
   display: flex;
-  justify-content: space around;
+  /* justify-content: space around; */
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  margin-left: -37px;
 }
 </style>

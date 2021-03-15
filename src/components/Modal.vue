@@ -42,7 +42,7 @@
     color: grey;
   }
   .modal.dark {
-    background: crimson;
+    background: rgb(27, 41, 70);
     color: #ffffff;
   }
   .modal.dark h3 {

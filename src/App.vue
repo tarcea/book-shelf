@@ -1,12 +1,24 @@
 <template>
 <Navbar @showForm="toggleShowForm" @showAdmin="toggleAdmin" :length="length"/>
-<teleport to="#modals" v-if="showModal">
-    <Modal theme="dark" @close="() => this.showModal = false" >
+<teleport to="#modals" v-if="showAddModal">
+    <Modal theme="dark" @close="() => this.showAddModal = false" >
       <template v-slot:title>
         Add a new book
       </template>
       <template v-slot:form>
-        <AddForm @submitForm="createBook" @cancelForm="showModal = false"/>
+        <InputForm />
+      </template>
+      <h3>{{ header }}</h3>
+      <p>{{ content }}</p>
+    </Modal>
+  </teleport>
+  <teleport to="#modals" v-if="showEditModal">
+    <Modal theme="dark" @close="() => this.showEditModal = false" >
+      <template v-slot:title>
+        Edit
+      </template>
+      <template v-slot:form>
+        <InputForm />
       </template>
       <h3>{{ header }}</h3>
       <p>{{ content }}</p>
@@ -22,7 +34,7 @@
       <div v-show="showForm">
         <AddForm @submitForm="createBook" @cancelForm="showForm = false"/>
       </div>
-      <SelectedBook v-if="selectedBook" :book="selectedBook" :admin="adminMode" @deleteBook="deleteBook" @openFormModal="toggleModal"/>
+      <SelectedBook v-if="selectedBook" :book="selectedBook" :admin="adminMode" @deleteBook="deleteBook" @openAddFormModal="toggleAddModal" @openEditFormModal="toggleEditModal"/>
     </div>
   </div>
 </template>
@@ -34,6 +46,7 @@ import SelectedBook from './components/SelectedBook'
 import Navbar from './components/Navbar'
 import AddForm from './components/AddForm'
 import Modal from './components/Modal'
+import InputForm from './components/InputForm'
 
 const db = firebase.firestore()
 
@@ -47,11 +60,12 @@ export default {
       adminMode: false,
       length: 0,
       darkMode: false,
-      showModal: false,
+      showAddModal: false,
+      showEditModal: false,
     }
   },
   components: {
-    Books, SelectedBook, Navbar, AddForm, Modal
+    Books, SelectedBook, Navbar, AddForm, Modal, InputForm
   },
   methods: {
     getBooks() {
@@ -96,8 +110,11 @@ export default {
     toggleAdmin() {
       return this.adminMode = !this.adminMode
     },
-    toggleModal() {
-      this.showModal = !this.showModal
+    toggleAddModal() {
+      this.showAddModal = !this.showAddModal
+    },
+    toggleEditModal() {
+      this.showEditModal = !this.showEditModal
     },
     async createBookInFirebase(book) {
       //for create a new book in firebase -- not used
@@ -155,5 +172,9 @@ export default {
 .title {
   margin-top: 80px;
   text-align:center;
+}
+body {
+  margin: 0;
+  /* background: #eeeeee; */
 }
 </style>
