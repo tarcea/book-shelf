@@ -1,11 +1,11 @@
 <template>
-  <form @submit.prevent="handleSubmit" ref="inputForm">
+  <form ref="inputForm" @submit.prevent="handleSubmit">
     <label>Title:</label>
-    <input type="text" required v-model="book.title">
+    <input type="text" v-model="book.title">
     <label>Author:</label>
-    <input type="text" required v-model="book.author">
+    <input type="text" v-model="book.author">
     <label>Image url:</label>
-    <input type="text" required v-model="book.img">
+    <input type="text" v-model="book.img">
     <label>About:</label>
     <textarea v-model="book.about"></textarea>
     <div class="submit">
@@ -35,11 +35,13 @@ export default {
       this.$refs.inputForm.reset();
     },
     clearForm() {
+      // console.log('gogo')
       this.$refs.inputForm.reset();
+      // this.$emit('resetForm', this.$refs.inputForm.reset())
     },
-    reset() {
-      this.clearForm()
-      this.$emit('resetForm')
+    clear() {
+      // this.clearForm()
+      
     }
   }
 };

@@ -1,7 +1,7 @@
 <template>
 <div v-if="admin && (!this.showEditModal && !this.showAddModal)" class="admin_menu">
-  <div class="admin_icon" @click="showEditFormInModal">&#x2699; edit</div>
   <div class="admin_icon" @click="showAddFormInModal">+ add</div>
+  <div class="admin_icon" @click="showEditFormInModal">&#x2699; edit</div>
   <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
 </div>
   <div class="selected" v-if="book.img">

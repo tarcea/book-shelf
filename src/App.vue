@@ -5,23 +5,23 @@
   :length="length"
   :darkMode="darkMode"
 />
-<teleport to="#modals" v-if="showAddModal && type !== 'xs'">
+<teleport to="#modals" v-if="showAddModal && width > 1000">
     <Modal theme="dark" @close="() => this.showAddModal = false" >
       <template v-slot:title>
         Add a new book
       </template>
       <template v-slot:form>
-        <InputForm  @submitForm="createBook"/>
+        <InputForm  @submitForm="createBook" @clear="reset"/>
       </template>
       <template v-slot:buttons>
         <div class="reset">
-          <button >reset form</button>
+          <button @click="reset">reset form</button>
           <button @click="cancel">cancel</button>
         </div>
       </template>
     </Modal>
   </teleport>
-  <teleport to="#modals" v-if="showEditModal && type !== 'xs'">
+  <teleport to="#modals" v-if="showEditModal && width > 1000">
     <Modal theme="dark" @close="() => this.showEditModal = false" >
       <template v-slot:title>
         Edit
@@ -44,7 +44,7 @@
     <Books :books="books" @filterBook="getSelectedBook" />
     </div>
     <div class="left">
-      <div v-if="showAddModal && type === 'xs'" class="form_bcg">
+      <div v-if="showAddModal && width <= 1000" class="form_bcg">
         Add a new book
         <InputForm @submitForm="createBook"/>
         <div class="reset">
@@ -52,7 +52,7 @@
           <button @click="cancel">cancel</button>
         </div>
       </div>
-      <div v-if="showEditModal && type === 'xs'" class="form_bcg">
+      <div v-if="showEditModal && width <= 1000" class="form_bcg">
         Edit this book
         <EditForm :book="selectedBook" />
         <div class="reset">
@@ -186,6 +186,9 @@ export default {
       this.showEditModal = false
       this.showAddModal = false
     },
+    reset() {
+      // this.clearForm()
+    }
   },
   mounted() {
     this.getBooks()
