@@ -1,5 +1,5 @@
 <template>
-<div v-if="admin" class="admin_menu">
+<div v-if="admin && (!this.showEditModal && !this.showAddModal)" class="admin_menu">
   <div class="admin_icon" @click="showEditFormInModal">&#x2699; edit</div>
   <div class="admin_icon" @click="showAddFormInModal">+ add</div>
   <div class="admin_icon" @click="deleteMe">&#x2718; delete</div>
@@ -24,7 +24,7 @@
 <script>
 
 export default {
-  props: [ 'book', 'admin'],
+  props: [ 'book', 'admin', 'showEditModal', 'showAddModal'],
   methods: {
     deleteMe() {
       this.$emit('deleteBook', this.book.id)
@@ -34,6 +34,11 @@ export default {
     },
     showEditFormInModal() {
       this.$emit('openEditFormModal')
+    }
+  },
+  data() {
+    return {
+      
     }
   }
 }

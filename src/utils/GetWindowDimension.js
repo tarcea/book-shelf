@@ -1,6 +1,6 @@
 import { computed, onMounted, onUnmounted, ref } from "vue"
 
-export default function () {
+ const GetWindowDimension = () => {
   let windowWidth = ref(window.innerWidth)
 
   const onWidthChange = () => windowWidth.value = window.innerWidth
@@ -17,3 +17,5 @@ export default function () {
 
   return { width, type }
 }
+
+export default GetWindowDimension;

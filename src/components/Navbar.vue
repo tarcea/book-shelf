@@ -1,6 +1,11 @@
 <template>
   <div class="navbar">
-    <p @click="() => this.$emit('showForm')">add book</p>
+    <p 
+      @click="() => this.$emit('darkMode')"
+    >
+    <span v-if="darkMode">light mode</span>
+    <span v-else>dark mode</span>
+    </p>
     <p class="counter"><span class="focus">{{length}}</span> books on shelf</p>
     <p @click="() => this.$emit('showAdmin')">admin</p>
   </div>
@@ -18,7 +23,7 @@ export default {
 
   },
   components: { },
-  props: ['showForm', 'length'],
+  props: ['showForm', 'length', 'darkMode'],
   
 }
 </script>

@@ -1,6 +1,11 @@
 <template>
-<Navbar @showForm="toggleShowForm" @showAdmin="toggleAdmin" :length="length"/>
-<teleport to="#modals" v-if="showAddModal">
+<Navbar 
+  @darkMode="toggleDarkMode" 
+  @showAdmin="toggleAdmin" 
+  :length="length"
+  :darkMode="darkMode"
+/>
+<teleport to="#modals" v-if="showAddModal && type !== 'xs'">
     <Modal theme="dark" @close="() => this.showAddModal = false" >
       <template v-slot:title>
         Add a new book
@@ -16,7 +21,7 @@
       </template>
     </Modal>
   </teleport>
-  <teleport to="#modals" v-if="showEditModal">
+  <teleport to="#modals" v-if="showEditModal && type !== 'xs'">
     <Modal theme="dark" @close="() => this.showEditModal = false" >
       <template v-slot:title>
         Edit
@@ -39,12 +44,33 @@
     <Books :books="books" @filterBook="getSelectedBook" />
     </div>
     <div class="left">
-      <div v-show="showForm">
-        <AddForm @submitForm="createBook" @cancelForm="showForm = false"/>
+      <div v-if="showAddModal && type === 'xs'" class="form_bcg">
+        Add a new book
+        <InputForm :book="dummyBook" />
+        <div class="reset">
+          <button >reset form</button>
+          <button @click="cancel">cancel</button>
+        </div>
       </div>
-      <SelectedBook v-if="selectedBook" :book="selectedBook" :admin="adminMode" @deleteBook="deleteBook" @openAddFormModal="toggleAddModal" @openEditFormModal="toggleEditModal"/>
+      <div v-if="showEditModal && type === 'xs'" class="form_bcg">
+        Edit this book
+        <InputForm :book="selectedBook" />
+        <div class="reset">
+          <button >reset form</button>
+          <button @click="cancel">cancel</button>
+        </div>
+      </div>
+      <SelectedBook 
+        v-if="selectedBook" 
+        :book="selectedBook" 
+        :admin="adminMode" 
+        @deleteBook="deleteBook" 
+        @openAddFormModal="toggleAddModal"
+        @openEditFormModal="toggleEditModal"
+        :showEditModal="showEditModal"
+        :showAddModal="showAddModal"
+      />
     </div>
-    {{width}}-{{type}}
   </div>
 </template>
 
@@ -56,23 +82,21 @@ import Navbar from './components/Navbar'
 import AddForm from './components/AddForm'
 import Modal from './components/Modal'
 import InputForm from './components/InputForm'
-// import { useBreakpoint } from 'vue-composable'
-import { GetWindowDimension } from './utils/GetWindowDimension'
+import  GetWindowDimension  from './utils/GetWindowDimension'
 
 const db = firebase.firestore()
-// const { width, type } = GetWindowDimension();
+
 
 export default {
   name: 'App',
-  // setup() {
-  //   const { width, type } = GetWindowDimension();
-  //   return useBreakpoint({ width, type })
-  // },
+  setup() {
+    const { width, type } = GetWindowDimension()
+    return { width, type }
+  },
   data() {
     return {
       books: [],
       selectedBook: {},
-      showForm: false,
       adminMode: false,
       length: 0,
       darkMode: false,
@@ -83,7 +107,7 @@ export default {
         author: 'Author',
         about: 'Describe your book',
         img: 'https://www.thethoughtfinder.co.uk/wp-content/uploads/2017/04/BOOK-PLACEHOLDER-3.png'
-      }
+      },
     }
   },
   components: {
@@ -126,8 +150,8 @@ export default {
     getRandomBook() {
       return this.selectedBook = this.books && this.books[Math.floor(Math.random() * this.books.length)]
     },
-    toggleShowForm() {
-      return this.showForm = !this.showForm
+    toggleDarkMode() {
+      return this.darkMode = !this.darkMode
     },
     toggleAdmin() {
       return this.adminMode = !this.adminMode
@@ -140,12 +164,10 @@ export default {
     },
     async createBookInFirebase(book) {
       //for create a new book in firebase -- not used
-      this.showForm = false;
       await db.collection("books").add(book)
     },
     async createBook(book) {
       //for create in localStorage
-      // this.showForm = false;
       this.books = [{ ...book, id: new Date().getTime() + Math.floor(Math.random() * Math.floor(1000)) }, ...this.books]
       localStorage.setItem('books', JSON.stringify(this.books))
     },
@@ -173,8 +195,9 @@ export default {
   mounted() {
     this.getBooks()
     // this.length = this.books.length
+    
   },
-  updated() {
+  beforeUpdate() {
     this.updateLength(this.books)
   }
 }
@@ -213,5 +236,14 @@ body {
 .reset {
   display: flex;
   justify-content: space-evenly;
+}
+.form_bcg {
+  width: 350px;
+  padding: 20px;
+  margin: 80px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  background: rgb(27, 41, 70);
+  color: #ffffff;
 }
 </style>
