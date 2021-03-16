@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit" ref="inputForm">
     <label>Title:</label>
     <input type="text" required v-model="book.title">
     <label>Author:</label>
@@ -8,6 +8,9 @@
     <input type="text" required v-model="book.img">
     <label>About:</label>
     <textarea v-model="book.about"></textarea>
+    <div class="submit">
+      <button>submit</button>
+    </div>
   </form>
 </template>
 
@@ -17,8 +20,20 @@ export default {
   data() {
     return {
       
-    };
+    }
   },
+  methods: {
+    handleSubmit() {
+      console.log(this.book.title)
+    },
+    clearForm() {
+      this.$refs.inputForm.reset();
+    },
+    reset() {
+      this.clearForm()
+      this.$emit('resetForm')
+    }
+  }
 };
 
 </script>
@@ -53,5 +68,17 @@ input, textarea {
 textarea {
   resize: none;
   height: 100px;
+}
+button {
+  background: crimson;
+  border: 0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 20px;
+}
+.submit {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>

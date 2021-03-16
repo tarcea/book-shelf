@@ -4,6 +4,7 @@
       <slot name="title"></slot>
       <div class="actions">
         <slot name="form"></slot>
+        <slot name="buttons"></slot>
       </div>
     </div>
   </div>

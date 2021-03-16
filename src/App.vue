@@ -8,6 +8,12 @@
       <template v-slot:form>
         <InputForm :book="dummyBook" />
       </template>
+      <template v-slot:buttons>
+        <div class="reset">
+          <button >reset form</button>
+          <button @click="cancel">cancel</button>
+        </div>
+      </template>
     </Modal>
   </teleport>
   <teleport to="#modals" v-if="showEditModal">
@@ -16,7 +22,13 @@
         Edit
       </template>
       <template v-slot:form>
-        <InputForm :book="selectedBook"/>
+        <InputForm :book="selectedBook" />
+      </template>
+      <template v-slot:buttons>
+        <div class="reset">
+          <button>reset form</button>
+          <button @click="cancel">cancel</button>
+        </div>
       </template>
     </Modal>
   </teleport>
@@ -32,6 +44,7 @@
       </div>
       <SelectedBook v-if="selectedBook" :book="selectedBook" :admin="adminMode" @deleteBook="deleteBook" @openAddFormModal="toggleAddModal" @openEditFormModal="toggleEditModal"/>
     </div>
+    {{width}}-{{type}}
   </div>
 </template>
 
@@ -43,11 +56,18 @@ import Navbar from './components/Navbar'
 import AddForm from './components/AddForm'
 import Modal from './components/Modal'
 import InputForm from './components/InputForm'
+// import { useBreakpoint } from 'vue-composable'
+import { GetWindowDimension } from './utils/GetWindowDimension'
 
 const db = firebase.firestore()
+// const { width, type } = GetWindowDimension();
 
 export default {
   name: 'App',
+  // setup() {
+  //   const { width, type } = GetWindowDimension();
+  //   return useBreakpoint({ width, type })
+  // },
   data() {
     return {
       books: [],
@@ -144,8 +164,11 @@ export default {
       if(array) {
         this.length = array.length
       }
-      
-    }
+    },
+    cancel() {
+      this.showEditModal = false
+      this.showAddModal = false
+    },
   },
   mounted() {
     this.getBooks()
@@ -178,5 +201,17 @@ export default {
 body {
   margin: 0;
   /* background: #eeeeee; */
+}
+.reset button {
+  background: crimson;
+  border: 0;
+  padding: 8px 16px;
+  margin-top: 8px;
+  color: white;
+  border-radius: 20px;
+}
+.reset {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>
