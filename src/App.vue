@@ -11,7 +11,7 @@
         Add a new book
       </template>
       <template v-slot:form>
-        <InputForm :book="dummyBook" />
+        <InputForm  @submitForm="createBook"/>
       </template>
       <template v-slot:buttons>
         <div class="reset">
@@ -27,7 +27,7 @@
         Edit
       </template>
       <template v-slot:form>
-        <InputForm :book="selectedBook" />
+        <EditForm :book="selectedBook" />
       </template>
       <template v-slot:buttons>
         <div class="reset">
@@ -46,7 +46,7 @@
     <div class="left">
       <div v-if="showAddModal && type === 'xs'" class="form_bcg">
         Add a new book
-        <InputForm :book="dummyBook" />
+        <InputForm @submitForm="createBook"/>
         <div class="reset">
           <button >reset form</button>
           <button @click="cancel">cancel</button>
@@ -54,7 +54,7 @@
       </div>
       <div v-if="showEditModal && type === 'xs'" class="form_bcg">
         Edit this book
-        <InputForm :book="selectedBook" />
+        <EditForm :book="selectedBook" />
         <div class="reset">
           <button >reset form</button>
           <button @click="cancel">cancel</button>
@@ -82,6 +82,7 @@ import Navbar from './components/Navbar'
 import AddForm from './components/AddForm'
 import Modal from './components/Modal'
 import InputForm from './components/InputForm'
+import EditForm from './components/EditForm'
 import  GetWindowDimension  from './utils/GetWindowDimension'
 
 const db = firebase.firestore()
@@ -102,16 +103,10 @@ export default {
       darkMode: false,
       showAddModal: false,
       showEditModal: false,
-      dummyBook: {
-        title: 'Title',
-        author: 'Author',
-        about: 'Describe your book',
-        img: 'https://www.thethoughtfinder.co.uk/wp-content/uploads/2017/04/BOOK-PLACEHOLDER-3.png'
-      },
     }
   },
   components: {
-    Books, SelectedBook, Navbar, AddForm, Modal, InputForm
+    Books, SelectedBook, Navbar, AddForm, Modal, InputForm, EditForm
   },
   methods: {
     getBooks() {

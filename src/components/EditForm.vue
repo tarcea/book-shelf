@@ -16,15 +16,10 @@
 
 <script>
 export default {
-  props: [ ],
+  props: [ 'book' ],
   data() {
     return {
-      book: {
-        title: 'Title',
-        author: 'Author',
-        about: 'Describe your book',
-        img: 'https://www.thethoughtfinder.co.uk/wp-content/uploads/2017/04/BOOK-PLACEHOLDER-3.png'
-      },
+      
     }
   },
   methods: {
@@ -32,7 +27,7 @@ export default {
       const { title, author, about, img } = this.book
       this.book = {...this.book, title, author, about, img}
       this.$emit('submitForm', this.book)
-      this.$refs.inputForm.reset();
+      // e.target.reset();
     },
     clearForm() {
       this.$refs.inputForm.reset();

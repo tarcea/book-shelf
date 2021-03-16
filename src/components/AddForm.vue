@@ -41,7 +41,7 @@ export default {
       e.preventDefault()
       this.book = {...this.book, title, author, about, img}
       this.$emit('submitForm', this.book)
-      e.target.reset();
+      // e.target.reset();
     },
     cancelSubmit() {
       this.clearForm()
