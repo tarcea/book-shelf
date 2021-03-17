@@ -4,6 +4,7 @@
   @showAdmin="toggleAdmin" 
   :length="length"
   :darkMode="darkMode"
+  :adminMode="adminMode"
 />
 <teleport to="#modals" v-if="showAddModal && width > 1000">
     <Modal theme="dark" @close="() => this.showAddModal = false" >
@@ -27,7 +28,7 @@
         Edit
       </template>
       <template v-slot:form>
-        <EditForm :book="selectedBook" />
+        <EditForm :book="selectedBook" @edit="updateBook"/>
       </template>
       <template v-slot:buttons>
         <div class="reset">
@@ -54,7 +55,7 @@
       </div>
       <div v-if="showEditModal && width <= 1000" class="form_bcg">
         Edit this book
-        <EditForm :book="selectedBook" />
+        <EditForm :book="selectedBook" @edit="updateBook"/>
         <div class="reset">
           <button >reset form</button>
           <button @click="cancel">cancel</button>
@@ -165,6 +166,12 @@ export default {
       //for create in localStorage
       this.books = [{ ...book, id: new Date().getTime() + Math.floor(Math.random() * Math.floor(1000)) }, ...this.books]
       localStorage.setItem('books', JSON.stringify(this.books))
+      const message = confirm(`You ceated a new book: ${book.title}, do you want to create another one? `)
+      if (message) {
+        return
+      }
+      this.showAddModal = false
+      this.selectedBook = book
     },
     deleteBook(id) {
     const books = this.books.filter((book) => {
@@ -176,6 +183,12 @@ export default {
       }
       localStorage.setItem('books', JSON.stringify(books))
       this.getBooks()
+    },
+    updateBook(editedBook) {
+      const editedBooks = this.books.map(book => book.id === editedBook.id ? editedBook : book)
+      localStorage.setItem('books', JSON.stringify(editedBooks))
+      this.selectedBook = editedBook
+      this.showEditModal = false
     },
     updateLength(array) {
       if(array) {
@@ -236,7 +249,7 @@ body {
   justify-content: space-evenly;
 }
 .form_bcg {
-  width: 350px;
+  width: 85vw;
   padding: 20px;
   margin: 80px auto;
   background: #ffffff;

@@ -7,7 +7,7 @@
     <span v-else>dark mode</span>
     </p>
     <p class="counter"><span class="focus">{{length}}</span> books on shelf</p>
-    <p @click="() => this.$emit('showAdmin')">admin</p>
+    <p @click="() => this.$emit('showAdmin')" :class="{active: adminMode}">admin</p>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 
   },
   components: { },
-  props: ['showForm', 'length', 'darkMode'],
+  props: ['showForm', 'length', 'darkMode', 'adminMode'],
   
 }
 </script>
@@ -53,6 +53,9 @@ export default {
  .focus {
    font-size: 24px;
    color:orangered;
+ }
+ .active {
+   border-bottom: 1px solid crimson;
  }
 
 </style>

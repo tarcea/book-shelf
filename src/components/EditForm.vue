@@ -19,14 +19,14 @@ export default {
   props: [ 'book' ],
   data() {
     return {
-      
+      editedBook: {}
     }
   },
   methods: {
     handleSubmit() {
       const { title, author, about, img } = this.book
-      this.book = {...this.book, title, author, about, img}
-      this.$emit('submitForm', this.book)
+      this.editedBook = {...this.book, title, author, about, img}
+      this.$emit('edit', this.editedBook)
       // e.target.reset();
     },
     clearForm() {
