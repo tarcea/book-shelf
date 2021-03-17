@@ -260,7 +260,8 @@ body {
   position: relative;
 }
 button[disabled] {
-  opacity: 50%;
+  color: rgba(0.5, 0.5, 0.5, 0.5);
+  
 }
 .dark {
   /* background: #18191A; */
