@@ -5,34 +5,37 @@
   :length="length"
   :darkMode="darkMode"
   :adminMode="adminMode"
+  :class="{dark: darkMode}"
 />
-<teleport to="#modals" v-if="showAddModal && width > 1000">
+<teleport to="#modals" v-if="showAddModal && width > 900">
     <Modal theme="dark" @close="() => this.showAddModal = false" >
       <template v-slot:title>
         Add a new book
+        <span class="closex" @click="cancel">X</span>
       </template>
       <template v-slot:form>
         <InputForm  @submitForm="createBook" @clear="reset"/>
       </template>
       <template v-slot:buttons>
         <div class="reset">
-          <button @click="reset">reset form</button>
+          <button @click="reset" disabled>reset form</button>
           <button @click="cancel">cancel</button>
         </div>
       </template>
     </Modal>
   </teleport>
-  <teleport to="#modals" v-if="showEditModal && width > 1000">
+  <teleport to="#modals" v-if="showEditModal && width > 900">
     <Modal theme="dark" @close="() => this.showEditModal = false" >
       <template v-slot:title>
         Edit
+        <span class="closex" @click="cancel">X</span>
       </template>
       <template v-slot:form>
         <EditForm :book="selectedBook" @edit="updateBook"/>
       </template>
       <template v-slot:buttons>
         <div class="reset">
-          <button>reset form</button>
+          <button disabled>reset form</button>
           <button @click="cancel">cancel</button>
         </div>
       </template>
@@ -45,19 +48,21 @@
     <Books :books="books" @filterBook="getSelectedBook" />
     </div>
     <div class="left">
-      <div v-if="showAddModal && width <= 1000" class="form_bcg">
+      <div v-if="showAddModal && width <= 900" class="form_bcg">
         Add a new book
+        <span class="closex" @click="cancel">X</span>
         <InputForm @submitForm="createBook"/>
         <div class="reset">
-          <button >reset form</button>
+          <button disabled>reset form</button>
           <button @click="cancel">cancel</button>
         </div>
       </div>
-      <div v-if="showEditModal && width <= 1000" class="form_bcg">
+      <div v-if="showEditModal && width <= 900" class="form_bcg">
         Edit this book
+        <span class="closex" @click="cancel">X</span>
         <EditForm :book="selectedBook" @edit="updateBook"/>
         <div class="reset">
-          <button >reset form</button>
+          <button disabled>reset form</button>
           <button @click="cancel">cancel</button>
         </div>
       </div>
@@ -80,7 +85,6 @@ import firebase from "./firebaseConfig"
 import Books from './components/Books'
 import SelectedBook from './components/SelectedBook'
 import Navbar from './components/Navbar'
-import AddForm from './components/AddForm'
 import Modal from './components/Modal'
 import InputForm from './components/InputForm'
 import EditForm from './components/EditForm'
@@ -107,7 +111,7 @@ export default {
     }
   },
   components: {
-    Books, SelectedBook, Navbar, AddForm, Modal, InputForm, EditForm
+    Books, SelectedBook, Navbar, Modal, InputForm, EditForm
   },
   methods: {
     getBooks() {
@@ -147,7 +151,7 @@ export default {
       return this.selectedBook = this.books && this.books[Math.floor(Math.random() * this.books.length)]
     },
     toggleDarkMode() {
-      return this.darkMode = !this.darkMode
+      this.darkMode = !this.darkMode
     },
     toggleAdmin() {
       return this.adminMode = !this.adminMode
@@ -198,21 +202,17 @@ export default {
     cancel() {
       this.showEditModal = false
       this.showAddModal = false
-    },
-    reset() {
-      // this.clearForm()
     }
   },
   mounted() {
     this.getBooks()
-    // this.length = this.books.length
-    
+    this.darkMode = JSON.parse(localStorage.getItem('dark'))
   },
   beforeUpdate() {
     this.updateLength(this.books)
-  }
+   localStorage.setItem('dark', this.darkMode)
+  },
 }
-
 </script>
 
 <style>
@@ -235,6 +235,7 @@ export default {
 body {
   margin: 0;
   /* background: #eeeeee; */
+  
 }
 .reset button {
   background: crimson;
@@ -255,6 +256,24 @@ body {
   background: #ffffff;
   border-radius: 10px;
   background: rgb(27, 41, 70);
-  color: #ffffff;
+  color: #e4e6eb;
+  position: relative;
+}
+button[disabled] {
+  opacity: 50%;
+}
+.dark {
+  /* background: #18191A; */
+  background: rgb(27, 41, 70);
+  color: #f0f6fc;
+}
+input[type='tex'], textarea { font-family: Avenir, Helvetica, Arial, sans-serif; }
+.closex {
+  font-size: 24px;
+  font-weight: bold;
+  position: absolute;
+  right: 16px;
+  top: 8px;
+  cursor: default;
 }
 </style>

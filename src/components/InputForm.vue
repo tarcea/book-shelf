@@ -34,15 +34,6 @@ export default {
       this.$emit('submitForm', this.book)
       this.$refs.inputForm.reset();
     },
-    clearForm() {
-      // console.log('gogo')
-      this.$refs.inputForm.reset();
-      // this.$emit('resetForm', this.$refs.inputForm.reset())
-    },
-    clear() {
-      // this.clearForm()
-      
-    }
   }
 };
 
@@ -50,7 +41,7 @@ export default {
 
 <style scoped>
 form {
-  max-width: 420px;
+  max-width: 80vw;
   margin: 8px auto;
   background: white;
   text-align: left;

@@ -38,12 +38,11 @@ export default {
     }
   }
 };
-
 </script>
 
 <style scoped>
 form {
-  max-width: 420px;
+  max-width: 80vw;
   margin: 8px auto;
   background: white;
   text-align: left;

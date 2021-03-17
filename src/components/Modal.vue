@@ -25,6 +25,7 @@
 
 <style scoped>
   .modal {
+    position: relative;
     width: 350px;
     padding: 20px;
     margin: 80px auto;
